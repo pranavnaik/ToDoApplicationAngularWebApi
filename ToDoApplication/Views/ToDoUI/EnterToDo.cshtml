@@ -1,0 +1,88 @@
+﻿@model ToDoApplication.ViewModel.TasksVM
+@using ToDoApplication.Models;
+
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Enter ToDo</title>
+</head>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/angular.js"></script>
+<script src="~/Scripts/Tasks.js"></script> 
+
+<script language="javascript">
+    var app = angular.module("myApp", []);
+    app.controller('TaskViewModel', TaskViewModel);
+</script>
+
+
+<body ng-app="myApp">
+    <h2>Welcome @Session["UserName"]</h2>
+    <h4>Create a Task</h4> <hr />
+    <div>
+
+        <div ng-controller="TaskViewModel">
+            <form id="frm1">
+
+                <i>Enter Task Code :</i> <input id="TaskCode" ng-model="Task.TaskCode" name="Tasks.TaskCode" type="text" />
+                @Html.ValidationMessageFor(x => x.Tasks.TaskCode)<br />
+
+                <i>Enter Task Name :</i> <input id="TaskName" ng-model="Task.TaskName" name="Tasks.TaskName" type="text" />
+                @Html.ValidationMessageFor(x => x.Tasks.TaskName)<br />
+
+                <i>Enter Task Description :</i> <input id="TaskDescription" ng-model="Task.TaskDescription" name="Tasks.TaskDescription" type="text" />
+                @Html.ValidationMessageFor(x => x.Tasks.TaskDescription)<br />
+
+                <i>Mark Status:</i> <input id="IsComplete" ng-model="Task.IsComplete" name="Tasks.IsComplete" type="checkbox" />
+                @Html.ValidationMessageFor(x => x.Tasks.IsComplete)<br />
+
+                <i>Date:</i> <input id="EnteredDate" ng-model="Task.EnteredDate" name="Tasks.EnteredDate" type="datetime" />
+                @Html.ValidationMessageFor(x => x.Tasks.EnteredDate)<br />
+
+                <i>Assigned To:</i><input id="AssignedTo" ng-model="Task.AssignedTo" name="Tasks.AssignedTo" type="text" /><br />
+                @Html.ValidationMessageFor(x => x.Tasks.AssignedTo)<br />
+
+      
+            </form>
+
+            <input id="Btn" type="button" value="Create Task" ng-click="Add()" />
+            <input id="Btn" type="button" value="Update Task" ng-click="Update()" />
+            <input id="Btn" type="button" value="Delete Task" ng-click="Delete()" />
+
+            <table id="tbl1">
+                <tr>
+                    <td><strong>Task Code</strong></td>
+                    <td><strong>Task Name</strong></td>
+                    <td><strong>Task Description</strong></td>
+                    <td><strong>Status</strong></td>
+                    <td><strong>Entered Date</strong></td>
+                    <td><strong>AssignedTo</strong></td>
+                    <td><strong>Select the record</strong></td>
+                </tr>
+                <tr ng-repeat="Tsk in Tasks">
+                    <td>{{Tsk.TaskCode}}</td>
+                    <td>{{Tsk.TaskName}}</td>
+                    <td>{{Tsk.TaskDescription}}</td>
+                    <td>{{Tsk.IsComplete}}</td>
+                    <td>{{Tsk.EnteredDate}}</td>
+                    <td>{{Tsk.AssignedTo}}</td>
+                    <td><a ng-click="LoadByTaskCode(Tsk.TaskCode)" href="#">Select the task</a></td>
+                </tr>
+            </table>
+
+        </div>
+        </div>
+
+            <hr />
+            @Html.ActionLink("Logout", "LogOut")
+</body>
+</html>
